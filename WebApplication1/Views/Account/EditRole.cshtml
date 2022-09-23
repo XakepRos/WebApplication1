@@ -1,0 +1,26 @@
+﻿@model Microsoft.AspNetCore.Identity.IdentityRole
+
+@{
+    ViewData["Title"] = "Update Role";
+}
+
+<div>
+    @using (Html.BeginForm("EditRole", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+        @Html.TextBoxFor(m => m.Id, new {@Value = "0", @type = "number", @disabled = true, @hidden = true})
+
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Name, "Role Name", new {@class = "form-label"})
+            @Html.TextBoxFor(m => m.Name, new {@class = "form-control", @placeholder = "Enter Role Name"})
+            @Html.ValidationMessageFor(m => m.Name, "", new {@class = "text-danger"})
+        </div>
+      
+        <a asp-action="RoleListView" class="btn btn-success">Back</a>
+           
+        <button type="submit" class="btn btn-primary">Update</button>
+    }
+</div>

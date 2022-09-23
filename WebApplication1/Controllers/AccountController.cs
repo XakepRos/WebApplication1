@@ -219,6 +219,83 @@ namespace WebApplication1.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
+        public IActionResult EditRole(string id)
+       {
+            if(String.IsNullOrEmpty(id))
+            {
+                return View();
+            }
+            else
+            {
+                //update
+                var objFromDb = _userContext.Roles.FirstOrDefault(u => u.Id == id);
+                return View(objFromDb);
+            }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditRole(IdentityRole roleObj)
+        {
+            if (await _roleManager.RoleExistsAsync(roleObj.Name))
+            {
+                //error
+                TempData[SuccessMessageViewModel.Error] = "Role already exists.";
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("EditRole");
+            }
+            if (string.IsNullOrEmpty(roleObj.Id))
+            {
+                //create
+                await _roleManager.CreateAsync(new IdentityRole() { Name = roleObj.Name });
+                TempData[SuccessMessageViewModel.Success] = "Role created successfully";
+            }
+            else
+            {
+                //update
+                var objRoleFromDb = _userContext.Roles.FirstOrDefault(u => u.Id == roleObj.Id);
+                if (objRoleFromDb == null)
+                {
+                    TempData[SuccessMessageViewModel.Error] = "Role not found.";
+                    //return RedirectToAction(nameof(Index));
+                    return RedirectToAction("RoleListView");
+                }
+                objRoleFromDb.Name = roleObj.Name;
+                objRoleFromDb.NormalizedName = roleObj.Name.ToUpper();
+                var result = await _roleManager.UpdateAsync(objRoleFromDb);
+                TempData[SuccessMessageViewModel.Success] = "Role updated successfully";
+            }
+            //return RedirectToAction(nameof(Index));
+            return RedirectToAction("RoleListView");
+        }
+
+        [HttpPost]
+        //[Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteRole(string id)
+        {
+            var objFromDb = _userContext.Roles.FirstOrDefault(u => u.Id == id);
+            if (objFromDb == null)
+            {
+                TempData[SuccessMessageViewModel.Error] = "Role not found.";
+                return RedirectToAction("RoleListView");
+            }
+            var userRolesForThisRole = _userContext.UserRoles.Where(u => u.RoleId == id).Count();
+            if (userRolesForThisRole > 0)
+            {
+                TempData[SuccessMessageViewModel.Error] = "Cannot delete this role, since there are users assigned to this role.";
+                return RedirectToAction("RoleListView");
+            }
+            await _roleManager.DeleteAsync(objFromDb);
+            TempData[SuccessMessageViewModel.Success] = "Role deleted successfully.";
+            return RedirectToAction("RoleListView");
+
+        }
+
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateRoles()
         {
             return View();
