@@ -9,10 +9,10 @@ namespace WebApplication1.Data
         public DbaseContext(DbContextOptions<DbaseContext> options)
             : base(options)
         {
+
         }
 
         public DbSet<Department> Department {get; set;}
-        //public DbSet<Role> Roles { get; set; }
-        //public DbSet<UserModel> User { get; set; }
+        public DbSet<ProfileViewModel> Profile { get; set; }
     }
 }
