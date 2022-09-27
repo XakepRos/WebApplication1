@@ -15,6 +15,12 @@ builder.Services.AddDbContext<DbaseContext>(options =>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<DbaseContext>().AddDefaultTokenProviders();
 //builder.Services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<DbaseContext>().AddDefaultTokenProviders();
 
+//builder.Services.AddAuth0WebAppAuthentication(options => {
+//        options.Domain = builder.Configuration["Auth0:Domain"];
+//        options.ClientId = builder.Configuration["Auth0:ClientId"];
+//        options.Scope = "openid profile email";
+//    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
