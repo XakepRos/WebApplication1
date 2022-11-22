@@ -12,6 +12,7 @@ namespace WebApplication1.Controllers
         {
             _context = context;
         }
+
         public IActionResult Index()
         {
             IEnumerable<Department> objlist = _context.Department;

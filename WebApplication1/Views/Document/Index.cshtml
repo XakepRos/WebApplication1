@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Document Page";
+}
+
+@using (Html.BeginForm("Index", "Document", FormMethod.Post, new  { @enctype = "multipart/form-data"}))
+{
+    <b>Document Form</b>
+    <br />
+    <span style="color:red"> 
+        @ViewBag.Message
+    </span>
+    <br />
+    <input type="file" name="files" multiple />
+    <br />
+    <br />
+    <input type="submit" value="Submit" />
+}

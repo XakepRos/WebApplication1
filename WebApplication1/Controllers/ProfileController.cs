@@ -96,6 +96,7 @@ namespace WebApplication1.Controllers
             return View(profilefromdb);
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteUserProfile(int? id)

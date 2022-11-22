@@ -220,7 +220,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult EditRole(string id)
-       {
+        {
             if(String.IsNullOrEmpty(id))
             {
                 return View();
@@ -411,12 +411,13 @@ namespace WebApplication1.Controllers
                 }
             }
             return View(mfa);
+            
         }
 
         [HttpPost]
         public IActionResult ExternalLogin(string provider, string redirectUrl = null)
         {
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl); 
             var callBackUrl = Url.Action("ExternalLoginCallback");
             properties.RedirectUri = callBackUrl;
             return Challenge(properties, provider);
