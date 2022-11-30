@@ -14,6 +14,8 @@ namespace WebApplication1.Data
         public DbSet<Department> Department {get; set;}
         public DbSet<ProfileViewModel> Profile { get; set; }
         public DbSet<FileDetails> FileDetails { get; set; }
+        public DbSet<CategoryModel> Categories { get; set; }
+
 
     }
 }
