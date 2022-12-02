@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IFileService, FileService>();
 
 builder.Services.AddControllersWithViews();
+builder.Services.Configure<ApplicationConfigurations>(builder.Configuration.GetSection("ApplicationConfigurations"));
 builder.Services.AddDbContext<DbaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbaseContext") ?? throw new InvalidOperationException("Connection string not found."))
 );
